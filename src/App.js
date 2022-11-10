@@ -6,6 +6,8 @@ import { getMyStoreItemAsync } from './features/myStore/myStoreItemSlice'
 import './App.css';
 import { Logo } from './features/header/Logo'
 import { MyStoreItem, myStoreItem } from './features/myStore/myStoreItem'
+import { MyStoreItemGrid } from './features/myStore/myStoreItemGrid';
+import { Button } from '@mui/material';
 
 function App() {
   const dispatch = useDispatch();
@@ -18,16 +20,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <Logo />
-        <p>
-          Online Order
-          <MyStoreItem />
-
-          <button
-            onClick={() => dispatch(getMyStoreAsync())}
-          >
-            Get Async
-          </button>
-        </p>
+        <MyStoreItemGrid />
+        <Button variant="contained">Order</Button>
+        <br />
       </header>
     </div>
   );

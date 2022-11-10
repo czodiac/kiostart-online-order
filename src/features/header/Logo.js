@@ -4,13 +4,15 @@ import { selectMyStore } from '../myStore/myStoreSlice'
 
 export const Logo = () => {
     const myStore = useSelector(selectMyStore)
-    let menuImg = ''
+    let menuImg, shopName = ''
     if (myStore != '') {
         menuImg = myStore.shop.kiosk_menu_banner;
+        shopName = myStore.shop.business_name;
     }
     return (
         <div>
             <img src={menuImg} />
+            <h1>{shopName}</h1>
         </div>
     )
 }
