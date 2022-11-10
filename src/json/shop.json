@@ -1,0 +1,57 @@
+{
+  type: 'auth/getSystemUser/fulfilled',
+  payload: {
+    id: 17,
+    user: {
+      id: 35,
+      username: 'demo_test',
+      email: '',
+      groups: []
+        },
+    role: 'Admin',
+    shop: {
+      id: 17,
+      business_name: 'My Shop',
+      tax_rate: '0.0000',
+      order_count: 309,
+      stripe_connect_acct_id: 'acct_1LAVjnGaLTtigCqP',
+      stripe_term_loc_id: 'tml_EqZSUAAn8Rua3b',
+      stripe_dashboard_term_loc_id: null,
+      stripe_last_connected_reader_id: 'tmr_E2WLFwVbCNInh5',
+      stripe_subscription_item_id: 'sub_1LAVjqGdutISh1LNogv9HlBy',
+      stripe_customer_id: 'cus_LsGG2LfcLab2QE',
+      charge_customers_fee: false,
+      is_testing: true,
+      is_table_mode: false,
+      tip_enabled: true,
+      kiosk_main_img: 'https: //api.bigkiosksolution.com/media/media/holdaak_main-min_1_1_M15N2kF.jpg',
+      kiosk_main_img_full_height: true,
+      kiosk_menu_banner: 'https: //api.bigkiosksolution.com/media/media/Untitled_design_-_2022-10-31T123407.999.png',
+      street_address: null,
+      city: null,
+      state: null,
+      zip: null,
+      phone: null,
+      table_selection: false,
+      terms_and_condition_agreed: true,
+      funds: '-0.57',
+      type: 'standard',
+      transaction_fee: '0.25',
+      add_category_allowed: true,
+      add_item_allowed: true,
+      add_addon_allowed: true,
+      edit_category_allowed: true,
+      edit_item_allowed: true,
+      edit_addon_allowed: true,
+      delete_category_allowed: true,
+      delete_item_allowed: true,
+      delete_addon_allowed: true,
+      franchise: null
+        },
+    email: 'test@demo.com'
+    },
+  meta: {
+    requestId: 'zXZfLSg8S4aEd7cpOfV-H',
+    requestStatus: 'fulfilled'
+    }
+}
