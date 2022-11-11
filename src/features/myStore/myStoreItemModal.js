@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../global/myStoreItemModalSlice';
-
+import { getDevice } from '../global/deviceInfoSlice';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -11,31 +11,45 @@ import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 
+const Img = styled('img')({
+    margin: 'auto',
+    maxWidth: '400px',
+    maxHeight: '200px',
+    display: 'block'
+});
+
+const item_desc_style = {
+    maxHeight: 200,
+    overflow: 'auto',
+};
+
 const modal_style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 400,
+    width: 500,
     bgcolor: 'background.paper',
     borderRadius: '3px',
     boxShadow: 24,
+    padding: 15,
     p: 4,
     outline: 'none',
 };
-
-const Img = styled('img')({
-    margin: 'auto',
-    maxWidth: '400px',
-    maxHeight: '300px',
-    display: 'block'
-});
 
 export const MyStoreItemModal = () => {
     const [qty, setQty] = useState(1);
     const open = useSelector(getMyStoreItemModalStatus);
     const item = useSelector(getMyStoreItemModalItem);
+    const device = useSelector(getDevice);
     const dispatch = useDispatch();
+
+    // Change modal width dynamically.
+    let modalWidth = 550;
+    if (device == 'Mobile') modal_style.width = 300;
+    else if (device == 'Tablet') modal_style.width = 550;
+    else modal_style.width = 500;
+
     const handleOpen = () => {
         dispatch(setMyStoreItemModalStatus(true));
     }
@@ -70,7 +84,7 @@ export const MyStoreItemModal = () => {
                         {item != null ? item.name : ''}
                     </Typography>
                     <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
-                        {item != null ? item.description : ''}
+                        <p style={item_desc_style}>{item != null ? item.description : ''}</p>
                     </Typography>
                     <Typography id="keep-mounted-modal-description" sx={{ mt: 2 }}>
                         <b>{item != null ? '$' + item.unit_price : ''}</b>
