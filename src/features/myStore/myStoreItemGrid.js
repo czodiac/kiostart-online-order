@@ -3,40 +3,33 @@ import { useSelector } from 'react-redux';
 import { selectMyStoreItem } from './myStoreItemSlice';
 import { MyStoreItem } from './myStoreItem';
 import './myStoreItemGrid.css';
+import { styled } from '@mui/material/styles';
+import Grid from '@mui/material/Grid';
+import Paper from '@mui/material/Paper';
+import { getDevice } from '../global/deviceInfoSlice';
 
 export const MyStoreItemGrid = () => {
+    const device = useSelector(getDevice)
     const items = useSelector(selectMyStoreItem)
-    const itemsPerRow = 5
-    let itemList = []
+    const ShopItem = styled(Paper)(({ theme }) => ({
+        ...theme.typography.body2,
+        padding: theme.spacing(1),
+        textAlign: 'center',
+    }));
 
-    if (items != '') {
-        let totalItemsCount = Object.keys(items).length;
-        let totalRows = Math.floor(totalItemsCount / itemsPerRow);
-        let itemNo = 0;
-
-        let itemsForRow = [];
-        for (var i = 0; i < totalRows; i++) {
-            itemsForRow = [];
-            for (var j = 0; j < itemsPerRow; j++) {
-                itemsForRow.push(<MyStoreItem item={items[itemNo]} />)
-                itemNo += 1;
-            }
-            itemList.push(<tr>{itemsForRow}</tr>)
-        }
-
-        // Render last row
-        let lastRowItemsCount = totalItemsCount - (itemsPerRow * totalRows);
-        let itemsForLastRow = [];
-        for (var i = 0; i < lastRowItemsCount; i++) {
-            itemsForLastRow.push(<MyStoreItem item={items[itemNo]} />)
-            itemNo += 1;
-        }
-        itemList.push(<tr>{itemsForLastRow}</tr>)
-    }
+    let containerId = 'itemsContainer';
+    if (device == 'Mobile') containerId = 'itemsContainerForMobile'
 
     return (
-        <table>
-            {itemList}
-        </table>
+        <div id={containerId}>
+            {device}
+            <Grid className="shop_item" container spacing={2}>
+                {(items != '') ? items.map((item, index) => (
+                    <Grid item xs={12} sm={6} key={index} zeroMinWidth>
+                        <ShopItem><MyStoreItem item={item} /></ShopItem>
+                    </Grid>
+                )) : 'Loading...'}
+            </Grid>
+        </div>
     )
 }

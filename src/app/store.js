@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import myStoreReducer from '../features/myStore/myStoreSlice';
+import myStoreSlice from '../features/myStore/myStoreSlice';
 import myStoreItemSlice from '../features/myStore/myStoreItemSlice';
+import deviceInfoSlice from '../features/global/deviceInfoSlice';
 
 export const store = configureStore({
   reducer: {
-    myStore: myStoreReducer,
-    myStoreItem: myStoreItemSlice
+    myStore: myStoreSlice,
+    myStoreItem: myStoreItemSlice,
+    device: deviceInfoSlice,
   },
 });
