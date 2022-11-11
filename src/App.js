@@ -10,6 +10,7 @@ import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 import { setDevice } from './features/global/deviceInfoSlice';
+import { Logo } from './features/header/Logo'
 
 function App() {
   // Get store/item data.
@@ -36,7 +37,9 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <Logo />
         <MyStoreItemGrid />
+        <br />
         <Button variant="contained">Order</Button>
         <br />
       </header>

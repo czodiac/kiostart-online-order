@@ -32,7 +32,7 @@ table .itemName {
 }
 
 table .itemName.tablet {
-    max-width: 150px;
+    max-width: 130px;
     overflow: hidden;
 }
 
