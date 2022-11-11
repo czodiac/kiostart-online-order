@@ -7,15 +7,17 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import { getDevice } from '../global/deviceInfoSlice';
+import { MyStoreItemModal } from './myStoreItemModal';
+
+const ShopItem = styled(Paper)(({ theme }) => ({
+    ...theme.typography.body2,
+    padding: theme.spacing(1),
+    textAlign: 'center',
+}));
 
 export const MyStoreItemGrid = () => {
     const device = useSelector(getDevice)
     const items = useSelector(selectMyStoreItem)
-    const ShopItem = styled(Paper)(({ theme }) => ({
-        ...theme.typography.body2,
-        padding: theme.spacing(1),
-        textAlign: 'center',
-    }));
 
     let containerId = 'itemsContainer';
     if (device == 'Mobile') containerId = 'itemsContainerForMobile'
@@ -29,6 +31,7 @@ export const MyStoreItemGrid = () => {
                     </Grid>
                 )) : 'Loading...'}
             </Grid>
+            <MyStoreItemModal />
         </div>
     )
 }
