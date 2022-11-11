@@ -1,5 +1,5 @@
 # Online order portal for KioStart
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
+Responsive online order form built from scratch using React, [Redux](https://redux.js.org/), [Redux Toolkit](https://redux-toolkit.js.org/), Material UI
 
 Live demo: https://kiostart-online-order.vercel.app/
