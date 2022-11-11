@@ -8,6 +8,7 @@ import './myStoreItem.css';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import { openMyStoreItemModal } from '../global/myStoreItemModalSlice'
+
 const Img = styled('img')({
     margin: 'auto',
     maxWidth: '100px',
@@ -44,9 +45,11 @@ export const MyStoreItem = (obj) => {
         <Grid container className='itemContainer' spacing={2} onClick={() => showItemDetailsModal()} >
             <Grid item xs>
                 <table className='itemTable'>
-                    <tr><td><p className={`itemName ${deviceName}`}>{name}</p></td></tr>
-                    <tr><td><p className={deviceName}>{desc}</p></td></tr>
-                    <tr><td className='itemPrice'>${price}</td></tr>
+                    <tbody>
+                        <tr><td><p className={`itemName ${deviceName}`}>{name}</p></td></tr>
+                        <tr><td><p className={deviceName}>{desc}</p></td></tr>
+                        <tr><td className='itemPrice'>${price}</td></tr>
+                    </tbody>
                 </table>
             </Grid>
             <Grid item className='imgContainer'>
