@@ -12,8 +12,9 @@ import Grid from '@mui/material/Grid';
 export const MyStoreItem = (obj) => {
     const device = useSelector(getDevice);
 
-    let name, img, price, desc = ''
+    let itemId, name, img, price, desc = ''
     if (obj && Object.keys(obj).length > 0 && Object.getPrototypeOf(obj) === Object.prototype) {
+        itemId = obj.item.id;
         name = obj.item.name;
         if (name.length > 25) {
             name = name.substring(0, 23) + '...';
@@ -33,8 +34,12 @@ export const MyStoreItem = (obj) => {
     if (device == 'Tablet') {
         deviceName = 'tablet'
     }
+
+    const clicked = (obj) => {
+        alert('ItemID: ' + obj.itemId + ' clicked.');
+    }
     return (
-        <Grid container spacing={2}>
+        <Grid container className='itemContainer' spacing={2} onClick={() => clicked({ itemId })} >
             <Grid item xs>
                 <table className='itemTable'>
                     <tr><td><p className={`itemName ${deviceName}`}>{name}</p></td></tr>

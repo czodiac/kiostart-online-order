@@ -40,6 +40,10 @@ table .itemPrice {
     font-weight: bold;
 }
 
-.imgContainer {
+table .imgContainer {
     margin: auto !important;
+}
+
+div.itemContainer {
+    cursor: pointer;
 }
