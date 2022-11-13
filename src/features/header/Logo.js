@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { selectMyStore } from '../myStore/myStoreSlice'
+import { selectMyStore } from '../../slices/myStoreSlice'
 import { styled } from '@mui/material/styles';
 
 export const Logo = () => {
     const myStore = useSelector(selectMyStore)
     let menuImg, shopName = ''
-    if (myStore != '') {
+    if (myStore !== '') {
         menuImg = myStore.shop.kiosk_menu_banner;
         shopName = myStore.shop.business_name;
     }
@@ -21,6 +21,7 @@ export const Logo = () => {
     return (
         <div>
             <Img src={menuImg} />
+            Cart
             <h3>{shopName}</h3>
         </div>
     )

@@ -1,12 +1,12 @@
 import React from 'react'
 import { useSelector } from 'react-redux';
-import { selectMyStoreItem } from './myStoreItemSlice';
+import { selectMyStoreItem } from '../../slices/myStoreItemSlice';
 import { MyStoreItem } from './myStoreItem';
 import './myStoreItemGrid.css';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
-import { getDevice } from '../global/deviceInfoSlice';
+import { getDevice } from '../../slices/deviceInfoSlice';
 import { MyStoreItemModal } from './myStoreItemModal';
 
 const ShopItem = styled(Paper)(({ theme }) => ({
@@ -20,12 +20,12 @@ export const MyStoreItemGrid = () => {
     const items = useSelector(selectMyStoreItem)
 
     let containerId = 'itemsContainer';
-    if (device == 'Mobile') containerId = 'itemsContainerForMobile'
+    if (device === 'Mobile') containerId = 'itemsContainerForMobile'
 
     return (
         <div id={containerId}>
             <Grid className="shop_item" container spacing={2}>
-                {(items != '') ? items.map((item, index) => (
+                {(items !== '') ? items.map((item, index) => (
                     <Grid item xs={12} sm={6} key={index} zeroMinWidth>
                         <ShopItem><MyStoreItem item={item} /></ShopItem>
                     </Grid>

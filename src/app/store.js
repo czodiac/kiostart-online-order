@@ -1,8 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import myStoreSlice from '../features/myStore/myStoreSlice';
-import myStoreItemSlice from '../features/myStore/myStoreItemSlice';
-import deviceInfoSlice from '../features/global/deviceInfoSlice';
-import myStoreItemModalSlice from '../features/global/myStoreItemModalSlice';
+import myStoreSlice from '../slices/myStoreSlice';
+import myStoreItemSlice from '../slices/myStoreItemSlice';
+import deviceInfoSlice from '../slices/deviceInfoSlice';
+import myStoreItemModalSlice from '../slices/myStoreItemModalSlice';
+
+import authReducer from "../slices/authSlice";
+import messageReducer from "../slices/serverResponseMessageSlice";
 
 export const store = configureStore({
   reducer: {
@@ -10,5 +13,7 @@ export const store = configureStore({
     myStoreItem: myStoreItemSlice,
     device: deviceInfoSlice,
     myStoreItemModal: myStoreItemModalSlice,
+    auth: authReducer,
+    message: messageReducer
   },
 });

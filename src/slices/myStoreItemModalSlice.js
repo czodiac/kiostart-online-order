@@ -1,4 +1,3 @@
-import { FormatColorResetTwoTone } from '@material-ui/icons';
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {

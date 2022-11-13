@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { getMyStoreAsync } from './features/myStore/myStoreSlice'
-import { getMyStoreItemAsync } from './features/myStore/myStoreItemSlice'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { getMyStoreAsync } from './slices/myStoreSlice'
+import { getMyStoreItemAsync } from './slices/myStoreItemSlice'
 
 import './App.css';
 import { MyStoreItemGrid } from './features/myStore/myStoreItemGrid';
@@ -9,8 +10,9 @@ import { Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
-import { setDevice } from './features/global/deviceInfoSlice';
-import { Logo } from './features/header/Logo'
+import { setDevice } from './slices/deviceInfoSlice';
+import { Logo } from './features/header/logo';
+import { MenuBar } from './features/header/menuBar';
 
 function App() {
   // Get store/item data.
@@ -37,6 +39,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
+        <MenuBar />
         <Logo />
         <MyStoreItemGrid />
         <br />
