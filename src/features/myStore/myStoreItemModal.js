@@ -38,7 +38,7 @@ const modal_style = {
 
 export const MyStoreItemModal = () => {
     const [qty, setQty] = useState(1);
-    const open = useSelector(getMyStoreItemModalStatus);
+    const isMyStoreModalOpen = useSelector(getMyStoreItemModalStatus);
     const item = useSelector(getMyStoreItemModalItem);
     const dispatch = useDispatch();
     useSelector(setModalWidth(modal_style)); // Change modal width dynamically.
@@ -59,10 +59,10 @@ export const MyStoreItemModal = () => {
         setQty(newQty);
     }
     return (
-        <div>
+        <>
             <Modal
                 keepMounted
-                open={open}
+                open={isMyStoreModalOpen}
                 onClose={handleClose}
                 aria-labelledby="keep-mounted-modal-title"
                 aria-describedby="keep-mounted-modal-description"
@@ -91,6 +91,6 @@ export const MyStoreItemModal = () => {
                     &nbsp;<Button variant="contained" sx={{ height: 40 }} onClick={() => { handleAdd() }}>Add</Button>
                 </Box>
             </Modal>
-        </div>
+        </>
     );
 }

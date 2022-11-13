@@ -15,17 +15,26 @@ import BoardAdmin from "./components/BoardAdmin";
 */
 import { logoutAsync } from '../../slices/authSlice';
 import EventBus from "../../common/EventBus";
+import { openLoginModal, openRegisterModal } from "../../slices/modalSlice";
 
 export const MenuBar = () => {
+    const dispatch = useDispatch();
     const [showModeratorBoard, setShowModeratorBoard] = useState(false);
     const [showAdminBoard, setShowAdminBoard] = useState(false);
 
     const { user: currentUser } = useSelector((state) => state.auth);
-    const dispatch = useDispatch();
 
     const logOut = useCallback(() => {
         dispatch(logoutAsync());
     }, [dispatch]);
+
+    const showLoginModal = () => {
+        dispatch(openLoginModal());
+    }
+
+    const showRegisterModal = () => {
+        dispatch(openRegisterModal());
+    }
 
     useEffect(() => {
         if (currentUser) {
@@ -76,7 +85,7 @@ export const MenuBar = () => {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <a href="/login" className="nav-link" onClick={logOut}>
+                                <a className="nav-link" onClick={logOut}>
                                     LogOut
                                 </a>
                             </li>
@@ -84,9 +93,8 @@ export const MenuBar = () => {
                     ) : (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">
-                                <Link to={"/login"} className="nav-link">
-                                    Login
-                                </Link>
+                                <a className="nav-link" onClick={() => { showLoginModal() }}>
+                                    Login</a>
                             </li>
 
                             <li className="nav-item">
@@ -100,7 +108,6 @@ export const MenuBar = () => {
 
                 <div className="container mt-3">
                     <Routes>
-                        <Route path="/login" element={<Login />} />
                         <Route path="/register" element={<Register />} />
                         <Route path="/profile" element={<Profile />} />
                         {/*
@@ -111,6 +118,7 @@ export const MenuBar = () => {
                     */}
                     </Routes>
                 </div>
+                <Login />
             </div>
         </Router>
     );
