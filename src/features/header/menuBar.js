@@ -14,7 +14,7 @@ import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 */
 import { logoutAsync } from '../../slices/authSlice';
-import EventBus from "../../common/EventBus";
+import eventBus from "../../common/eventBus";
 import { openLoginModal, openRegisterModal } from "../../slices/modalSlice";
 
 export const MenuBar = () => {
@@ -45,12 +45,12 @@ export const MenuBar = () => {
             setShowAdminBoard(false);
         }
 
-        EventBus.on("logout", () => {
+        eventBus.on("logout", () => {
             logOut();
         });
 
         return () => {
-            EventBus.remove("logout");
+            eventBus.remove("logout");
         };
     }, [currentUser, logOut]);
 

@@ -127,7 +127,7 @@ const Login = () => {
         aria-describedby="keep-mounted-modal-description"
       >
         <Box sx={modal_style}>
-          <Button sx={{ width: 30, height: 30, minWidth: 0, padding: 0, margin: 0 }} onClick={() => { handleClose() }}>X</Button>
+          <Button className="closeButton" variant="contained" onClick={handleClose}>X</Button>
           <div className="login-container">
             <form onSubmit={handleLogin}>
               <Grid container spacing={2} columns={1}>
@@ -183,7 +183,7 @@ const Login = () => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
-                  * Login to save all your orders.
+                  Login to save all your orders.
                 </Grid>
               </Grid>
             </form>

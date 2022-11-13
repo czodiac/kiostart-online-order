@@ -12,7 +12,7 @@ import { styled } from '@mui/material/styles';
 
 const Img = styled('img')({
     margin: 'auto',
-    maxWidth: '400px',
+    maxWidth: '300px',
     maxHeight: '200px',
     display: 'block'
 });
@@ -68,7 +68,7 @@ export const MyStoreItemModal = () => {
                 aria-describedby="keep-mounted-modal-description"
             >
                 <Box sx={modal_style}>
-                    <Button sx={{ width: 30, height: 30, minWidth: 0, padding: 0, margin: 0 }} onClick={() => { handleClose() }}>X</Button>
+                    <Button className="closeButton" variant="contained" onClick={handleClose}>X</Button>
                     <Img src={item != null ? item.item_image.item_image : ''} />
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                         {item != null ? item.name : ''}
