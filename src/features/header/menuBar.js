@@ -13,7 +13,7 @@ import BoardUser from "./components/BoardUser";
 import BoardModerator from "./components/BoardModerator";
 import BoardAdmin from "./components/BoardAdmin";
 */
-import { logout } from '../../slices/authSlice';
+import { logoutAsync } from '../../slices/authSlice';
 import EventBus from "../../common/EventBus";
 
 export const MenuBar = () => {
@@ -24,7 +24,7 @@ export const MenuBar = () => {
     const dispatch = useDispatch();
 
     const logOut = useCallback(() => {
-        dispatch(logout());
+        dispatch(logoutAsync());
     }, [dispatch]);
 
     useEffect(() => {
@@ -53,14 +53,6 @@ export const MenuBar = () => {
                         Root
                     </Link>
                     <div className="navbar-nav mr-auto">
-                        {showModeratorBoard && (
-                            <li className="nav-item">
-                                <Link to={"/mod"} className="nav-link">
-                                    Moderator Board
-                                </Link>
-                            </li>
-                        )}
-
                         {showAdminBoard && (
                             <li className="nav-item">
                                 <Link to={"/admin"} className="nav-link">
@@ -68,7 +60,6 @@ export const MenuBar = () => {
                                 </Link>
                             </li>
                         )}
-
                         {currentUser && (
                             <li className="nav-item">
                                 <Link to={"/user"} className="nav-link">
@@ -77,7 +68,6 @@ export const MenuBar = () => {
                             </li>
                         )}
                     </div>
-
                     {currentUser ? (
                         <div className="navbar-nav ml-auto">
                             <li className="nav-item">

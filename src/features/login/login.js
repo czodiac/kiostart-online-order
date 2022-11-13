@@ -4,16 +4,16 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { login } from "../../slices/authSlice";
-import { setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
+import { getAuth, loginAsync } from "../../slices/authSlice";
+import { getServerResponseMessage, setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
 
 const Login = () => {
   let navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
-  const { isLoggedIn } = useSelector((state) => state.auth);
-  const { message } = useSelector((state) => state.message);
+  const { isLoggedIn } = useSelector(getAuth);
+  const { message } = useSelector(getServerResponseMessage);
 
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const Login = () => {
     const { username, password } = formValue;
     setLoading(true);
 
-    dispatch(login({ username, password }))
+    dispatch(loginAsync({ username, password }))
       .unwrap()
       .then(() => {
         navigate("/profile");

@@ -13,6 +13,6 @@ const serverResponseMessageSlice = createSlice({
 });
 
 const { reducer, actions } = serverResponseMessageSlice;
-
-export const { setServerResponseMessage } = actions
+export const getServerResponseMessage = (state) => state.message;
+export const { setServerResponseMessage } = actions;
 export default reducer;

@@ -3,13 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import { register } from "../../slices/authSlice";
-import { setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
+import { registerAsync } from "../../slices/authSlice";
+import { getServerResponseMessage, setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
 
 const Register = () => {
   const [successful, setSuccessful] = useState(false);
 
-  const { message } = useSelector((state) => state.message);
+  const { message } = useSelector(getServerResponseMessage);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -53,7 +53,7 @@ const Register = () => {
 
     setSuccessful(false);
 
-    dispatch(register({ username, email, password }))
+    dispatch(registerAsync({ username, email, password }))
       .unwrap()
       .then(() => {
         setSuccessful(true);
