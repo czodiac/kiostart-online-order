@@ -1,8 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/modalSlice';
-import { getDevice } from '../../slices/deviceInfoSlice';
+import { setModalWidth, getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/modalSlice';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -41,18 +40,9 @@ export const MyStoreItemModal = () => {
     const [qty, setQty] = useState(1);
     const open = useSelector(getMyStoreItemModalStatus);
     const item = useSelector(getMyStoreItemModalItem);
-    const device = useSelector(getDevice);
     const dispatch = useDispatch();
+    useSelector(setModalWidth(modal_style)); // Change modal width dynamically.
 
-    // Change modal width dynamically.
-    if (device === 'Mobile') modal_style.width = 300;
-    else if (device === 'Tablet') modal_style.width = 550;
-    else modal_style.width = 500;
-    /*
-        const handleOpen = () => {
-            dispatch(setMyStoreItemModalStatus(true));
-        }
-    */
     const handleClose = () => {
         dispatch(setMyStoreItemModalStatus(false));
         setQty(1);

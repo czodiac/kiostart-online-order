@@ -6,7 +6,7 @@ import * as Yup from "yup";
 
 import { getAuth, loginAsync } from "../../slices/authSlice";
 import { getServerResponseMessage, setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
-import { getMyStoreItemModalStatus } from "../../slices/modalSlice";
+import { setModalWidth, getLoginModalStatus } from "../../slices/modalSlice";
 
 const modal_style = {
   position: 'absolute',
@@ -24,10 +24,11 @@ const modal_style = {
 
 const Login = () => {
   let navigate = useNavigate();
-  const open = useSelector(getMyStoreItemModalStatus);
+  const isLoginModalOpen = useSelector(getLoginModalStatus);
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector(getAuth);
+  useSelector(setModalWidth(modal_style));
   const { serverMessage } = useSelector(getServerResponseMessage);
 
   const dispatch = useDispatch();
