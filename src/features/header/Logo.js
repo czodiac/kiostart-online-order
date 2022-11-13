@@ -19,10 +19,8 @@ export const Logo = () => {
     });
 
     return (
-        <div>
+        <div style={{ marginBottom: 15 }}>
             <Img src={menuImg} />
-            Cart
-            <h3>{shopName}</h3>
         </div>
     )
 }

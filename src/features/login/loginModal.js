@@ -38,7 +38,7 @@ const modal_style = {
   outline: 'none',
 };
 
-const Login = () => {
+export const LoginModal = () => {
   const dispatch = useDispatch();
   const [msgSeverity, setMsgSeverity] = useState('error');
   const [showPassword, setShowPassword] = useState(false);
@@ -257,6 +257,7 @@ const Login = () => {
                   )}
                 </Grid>
                 <Grid item xs={12}>
+                  <hr />
                   Login to save all your orders.
                 </Grid>
               </Grid>
@@ -267,5 +268,3 @@ const Login = () => {
     </>
   );
 };
-
-export default Login;
