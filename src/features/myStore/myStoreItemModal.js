@@ -88,7 +88,7 @@ export const MyStoreItemModal = () => {
                         }} size="small" style={{ width: 55 }} value={qty} onChange={(e) => { setQty(parseInt(e.target.value)) }} />
                         <Button onClick={() => { setQty(qty + 1) }}>+</Button>
                     </ButtonGroup>
-                    &nbsp;<Button variant="contained" sx={{ height: 40 }} onClick={() => { handleAdd() }}>Add</Button>
+                    &nbsp;<Button variant="contained" className='floatRight' sx={{ height: 40 }} onClick={handleAdd}>Add</Button>
                 </Box>
             </Modal>
         </>

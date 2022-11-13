@@ -1,27 +1,21 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { useFormik } from 'formik'
 
-import { getAuth, loginAsync } from "../../slices/authSlice";
+import { getAuth, loginAsync, registerAsync } from "../../slices/authSlice";
 import { getServerResponseMessage, setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
-import { setModalWidth, getLoginModalStatus, setLoginModalStatus } from "../../slices/modalSlice";
+import { setModalWidth, getLoginModalStatus, setLoginModalStatus, getRegisterModalStatus, setRegisterModalStatus } from "../../slices/modalSlice";
 
 // For modal style
-import { getDevice } from '../../slices/deviceInfoSlice';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
 import { green, purple } from '@mui/material/colors';
 import LoadingButton from '@mui/lab/LoadingButton';
-import ButtonGroup from "@mui/material/ButtonGroup";
 import TextField from '@mui/material/TextField';
-import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
-import FormControl from '@mui/material/FormControl';
-import FormHelperText from '@mui/material/FormHelperText';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -46,52 +40,34 @@ const modal_style = {
 
 const Login = () => {
   const dispatch = useDispatch();
-  const [loginUsername, setLoginUserName] = useState('');
-  const [loginPassword, setLoginPassword] = useState('');
+  const [msgSeverity, setMsgSeverity] = useState('error');
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const { serverMessage } = useSelector(getServerResponseMessage);
+  const isLoginModalOpen = useSelector(getLoginModalStatus);
+  const isRegisterModalOpen = useSelector(getRegisterModalStatus);
 
   // Modal related
-  const device = useSelector(getDevice);
-  if (device === 'Mobile') modal_style.width = 300;
-  else if (device === 'Tablet') modal_style.width = 550;
-  else modal_style.width = 500;
-
-  const isLoginModalOpen = useSelector(getLoginModalStatus);
-  useSelector(setModalWidth(modal_style));
+  useSelector(setModalWidth(modal_style)); // Change modal width dynamically.
   const handleClose = () => {
     dispatch(setServerResponseMessage('')); // Reset error message.
     dispatch(setLoginModalStatus(false));
-    setLoginUserName('');
-    setLoginPassword('');
+    dispatch(setRegisterModalStatus(false));
+    formik.values.loginUsername = '';
+    formik.values.registerEmail = '';
+    formik.values.loginPassword = '';
   }
 
-  // Login related
-  const [loading, setLoading] = useState(false);
-  const { isLoggedIn } = useSelector(getAuth);
-  const { serverMessage } = useSelector(getServerResponseMessage);
-
-  const handleNameChange = (e) => {
-    setLoginUserName(e.target.value);
-  }
-  const handlePassChange = (e) => {
-    setLoginPassword(e.target.value);
-  }
-  const handleLogin = (e) => {
-    e.preventDefault(); // Prevent redirect on submit!
-
-    const { username, password } = { username: loginUsername, password: loginPassword };
-    setLoading(true);
-
-    dispatch(loginAsync({ username, password }))
-      .unwrap()
-      .then(() => {
-        // Login successful.
-        handleClose();
-        setLoading(false);
-      })
-      .catch(() => {
-        setLoading(false);
-      });
+  const handleTabChange = (e, newTabValue) => {
+    if (newTabValue === 'loginTab') {
+      dispatch(setServerResponseMessage('')); // Reset error message.
+      dispatch(setLoginModalStatus(true));
+      dispatch(setRegisterModalStatus(false));
+    } else {
+      dispatch(setServerResponseMessage('')); // Reset error message.
+      dispatch(setLoginModalStatus(false));
+      dispatch(setRegisterModalStatus(true));
+    }
   };
 
   const handleClickShowPassword = () => {
@@ -117,11 +93,70 @@ const Login = () => {
     borderBottomLeftRadius: 0
   }));
 
+  const validate = (values) => {
+    const errors = {}
+
+    // Check email only if it's register modal.
+    if (!isLoginModalOpen) {
+      if (!values.registerEmail) {
+        errors.registerEmail = 'Required'
+      } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.registerEmail)) {
+        errors.registerEmail = 'Invalid email'
+      }
+    }
+
+    if (!values.loginUsername) {
+      errors.loginUsername = 'Required'
+    } else if (values.loginUsername.length < 3 || values.loginUsername.length > 20) {
+      errors.loginUsername = 'Must be 3~20 characters.'
+    }
+
+    if (!values.loginPassword) {
+      errors.loginPassword = 'Required'
+    } else if (values.loginPassword.length < 6 || values.loginPassword.length > 40) {
+      errors.loginPassword = 'Must be 6~40 characters.'
+    }
+
+    return errors
+  }
+
+  const formik = useFormik({
+    initialValues: {
+      loginUsername: '',
+      registerEmail: '',
+      loginPassword: ''
+    },
+    validate,
+    onSubmit: (values) => {
+      setLoading(true);
+      const { username, password, email } = { username: values.loginUsername, password: values.loginPassword, email: values.registerEmail };
+      let toCall = registerAsync({ username, email, password });
+      if (isLoginModalOpen) {
+        toCall = loginAsync({ username, password });
+      }
+
+      dispatch(toCall)
+        .unwrap()
+        .then(() => {
+          if (isLoginModalOpen) {
+            handleClose();  // Login successful. Close modal.
+          } else {
+            setMsgSeverity('success'); // Registration was a success.
+          }
+          setLoading(false);
+        })
+        .catch(() => {
+          setMsgSeverity('error');
+          setLoading(false);
+        });
+    },
+  })
+
   return (
     <>
       <Modal
         keepMounted
-        open={isLoginModalOpen}
+        open={isLoginModalOpen || isRegisterModalOpen}
         onClose={handleClose}
         aria-labelledby="keep-mounted-modal-title"
         aria-describedby="keep-mounted-modal-description"
@@ -129,14 +164,17 @@ const Login = () => {
         <Box sx={modal_style}>
           <Button className="closeButton" variant="contained" onClick={handleClose}>X</Button>
           <div className="login-container">
-            <form onSubmit={handleLogin}>
+            <form onSubmit={formik.handleSubmit}>
               <Grid container spacing={2} columns={1}>
                 <Grid item xs={12}>
-                  <LoginButton variant="contained">Login</LoginButton><RegisterButton variant="contained">Register</RegisterButton>
+                  <Tabs centered value={isLoginModalOpen ? "loginTab" : "registerTab"} onChange={handleTabChange}>
+                    <Tab value="loginTab" label="Login" />
+                    <Tab value="registerTab" label="Register" />
+                  </Tabs>
                 </Grid>
                 <Grid item xs={12}>
                   {serverMessage && (
-                    <Alert severity="error">
+                    <Alert severity={msgSeverity}>
                       {serverMessage}
                     </Alert>
                   )}
@@ -149,18 +187,53 @@ const Login = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField size="small" label="User Name" name="username" required variant="outlined" value={loginUsername} onChange={handleNameChange} sx={{ width: 260 }} />
+                  <TextField name="loginUsername" size="small" label="User Name" variant="outlined"
+                    error={
+                      Boolean(formik.errors.loginUsername && formik.touched.loginUsername)
+                    }
+                    helperText={
+                      formik.errors.loginUsername &&
+                      formik.touched.loginUsername &&
+                      String(formik.errors.loginUsername)
+                    }
+                    value={formik.values.loginUsername}
+                    onBlur={formik.handleBlur}
+                    onChange={formik.handleChange} sx={{ width: 260 }} />
                 </Grid>
+                {isLoginModalOpen ? '' :
+                  <Grid item xs={12}>
+                    <TextField
+                      name="registerEmail" size="small" label="Email" variant="outlined"
+                      error={
+                        Boolean(formik.errors.registerEmail && formik.touched.registerEmail)
+                      }
+                      helperText={
+                        formik.errors.registerEmail &&
+                        formik.touched.registerEmail &&
+                        String(formik.errors.registerEmail)
+                      }
+                      value={formik.values.registerEmail}
+                      onBlur={formik.handleBlur}
+                      onChange={formik.handleChange} sx={{ width: 260 }} />
+                  </Grid>}
                 <Grid item xs={12}>
-                  <FormControl size="small" variant="outlined">
-                    <InputLabel required htmlFor="outlined-adornment-password">Password</InputLabel>
-                    <OutlinedInput
-                      id="outlined-adornment-password"
-                      type={showPassword ? 'text' : 'password'}
-                      value={loginPassword}
-                      onChange={handlePassChange}
-                      required
-                      endAdornment={
+                  <TextField
+                    name="loginPassword"
+                    size="small" label="Password" variant="outlined"
+                    type={showPassword ? 'text' : 'password'}
+                    value={formik.values.loginPassword}
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      Boolean(formik.errors.loginPassword && formik.touched.loginPassword)
+                    }
+                    helperText={
+                      formik.errors.loginPassword &&
+                      formik.touched.loginPassword &&
+                      String(formik.errors.loginPassword)
+                    }
+                    InputProps={{
+                      endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
                             aria-label="toggle password visibility"
@@ -170,16 +243,17 @@ const Login = () => {
                             {showPassword ? <VisibilityOff /> : <Visibility />}
                           </IconButton>
                         </InputAdornment>
-                      }
-                      label="Password"
-                    />
-                  </FormControl>
+                      ),
+                    }}
+                  >Password</TextField>
                 </Grid>
                 <Grid item xs={12}>
                   {loading ? (
                     <LoadingButton loading variant="contained">...........</LoadingButton>
                   ) : (
-                    <Button type="submit" variant="contained">Login</Button>
+                    isLoginModalOpen ?
+                      <Button type="submit" variant="contained">Login</Button> :
+                      <Button type="submit" variant="contained">Register</Button>
                   )}
                 </Grid>
                 <Grid item xs={12}>
