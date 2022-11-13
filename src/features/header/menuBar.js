@@ -4,8 +4,8 @@ import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 
 import "./menuBar.css";
 
-import Login from '../login/login';
-import Register from '../login/register';
+import Login from '../login/loginModal';
+import Register from '../login/registerModal';
 import Profile from '../login/profile';
 /*
 import Home from "./components/Home";

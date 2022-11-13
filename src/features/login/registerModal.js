@@ -9,7 +9,7 @@ import { getServerResponseMessage, setServerResponseMessage } from "../../slices
 const Register = () => {
   const [successful, setSuccessful] = useState(false);
 
-  const { message } = useSelector(getServerResponseMessage);
+  const { serverMessage } = useSelector(getServerResponseMessage);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -122,13 +122,13 @@ const Register = () => {
         </Formik>
       </div>
 
-      {message && (
+      {serverMessage && (
         <div className="form-group">
           <div
             className={successful ? "alert alert-success" : "alert alert-danger"}
             role="alert"
           >
-            {message}
+            {serverMessage}
           </div>
         </div>
       )}

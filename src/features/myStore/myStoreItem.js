@@ -1,7 +1,7 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { getDevice } from '../../slices/deviceInfoSlice';
-import { openMyStoreItemModal } from '../../slices/myStoreItemModalSlice'
+import { openMyStoreItemModal } from '../../slices/modalSlice'
 import './myStoreItem.css';
 import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';

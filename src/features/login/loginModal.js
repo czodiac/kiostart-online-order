@@ -6,14 +6,29 @@ import * as Yup from "yup";
 
 import { getAuth, loginAsync } from "../../slices/authSlice";
 import { getServerResponseMessage, setServerResponseMessage } from "../../slices/serverResponseMessageSlice";
+import { getMyStoreItemModalStatus } from "../../slices/modalSlice";
+
+const modal_style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 500,
+  bgcolor: 'background.paper',
+  borderRadius: '3px',
+  boxShadow: 24,
+  padding: 15,
+  p: 4,
+  outline: 'none',
+};
 
 const Login = () => {
   let navigate = useNavigate();
-
+  const open = useSelector(getMyStoreItemModalStatus);
   const [loading, setLoading] = useState(false);
 
   const { isLoggedIn } = useSelector(getAuth);
-  const { message } = useSelector(getServerResponseMessage);
+  const { serverMessage } = useSelector(getServerResponseMessage);
 
   const dispatch = useDispatch();
 
@@ -96,10 +111,10 @@ const Login = () => {
         </Formik>
       </div>
 
-      {message && (
+      {serverMessage && (
         <div className="form-group">
           <div className="alert alert-danger" role="alert">
-            {message}
+            {serverMessage}
           </div>
         </div>
       )}

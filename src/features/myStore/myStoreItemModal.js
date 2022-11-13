@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/myStoreItemModalSlice';
+import { getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/modalSlice';
 import { getDevice } from '../../slices/deviceInfoSlice';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';

@@ -3,16 +3,16 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {};
 
 const serverResponseMessageSlice = createSlice({
-  name: "message",
+  name: "serverMessage",
   initialState,
   reducers: {
     setServerResponseMessage: (state, action) => {
-      return { message: action.payload };
+      return { serverMessage: action.payload };
     }
   },
 });
 
 const { reducer, actions } = serverResponseMessageSlice;
-export const getServerResponseMessage = (state) => state.message;
+export const getServerResponseMessage = (state) => state.serverMessage;
 export const { setServerResponseMessage } = actions;
 export default reducer;
