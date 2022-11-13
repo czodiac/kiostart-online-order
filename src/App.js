@@ -1,4 +1,3 @@
-import { getMyStoreAsync } from './features/myStore/myStoreSlice'
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { getMyStoreAsync } from './slices/myStoreSlice'
