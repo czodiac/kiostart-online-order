@@ -187,7 +187,12 @@ export const LoginModal = () => {
                   />
                 </Grid>
                 <Grid item xs={12}>
-                  <TextField name="loginUsername" size="small" label="User Name" variant="outlined"
+                  <TextField
+                    name="loginUsername"
+                    sx={{ width: 250 }}
+                    size="small"
+                    label="User Name"
+                    variant="outlined"
                     error={
                       Boolean(formik.errors.loginUsername && formik.touched.loginUsername)
                     }
@@ -198,12 +203,16 @@ export const LoginModal = () => {
                     }
                     value={formik.values.loginUsername}
                     onBlur={formik.handleBlur}
-                    onChange={formik.handleChange} sx={{ width: 260 }} />
+                    onChange={formik.handleChange} />
                 </Grid>
                 {isLoginModalOpen ? '' :
                   <Grid item xs={12}>
                     <TextField
-                      name="registerEmail" size="small" label="Email" variant="outlined"
+                      name="registerEmail"
+                      sx={{ width: 250 }}
+                      size="small"
+                      label="Email"
+                      variant="outlined"
                       error={
                         Boolean(formik.errors.registerEmail && formik.touched.registerEmail)
                       }
@@ -214,12 +223,15 @@ export const LoginModal = () => {
                       }
                       value={formik.values.registerEmail}
                       onBlur={formik.handleBlur}
-                      onChange={formik.handleChange} sx={{ width: 260 }} />
+                      onChange={formik.handleChange} />
                   </Grid>}
                 <Grid item xs={12}>
                   <TextField
                     name="loginPassword"
-                    size="small" label="Password" variant="outlined"
+                    sx={{ width: 250 }}
+                    size="small"
+                    label="Password"
+                    variant="outlined"
                     type={showPassword ? 'text' : 'password'}
                     value={formik.values.loginPassword}
                     onChange={formik.handleChange}
