@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { getMyStoreAsync } from './slices/myStoreSlice'
 import { getMyStoreItemAsync } from './slices/myStoreItemSlice'
@@ -12,6 +13,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { setDevice } from './slices/deviceInfoSlice';
 import { Logo } from './features/header/logo';
 import { MenuBar } from './features/header/menuBar';
+import { Profile } from './features/login/profile';
 
 function App() {
   // Get store/item data.
@@ -36,16 +38,18 @@ function App() {
   }
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <MenuBar />
-        <Logo />
-        <MyStoreItemGrid />
-        <br />
-        <Button variant="contained">Order</Button>
-        <br />
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <header className="App-header">
+          <MenuBar />
+          <Logo />
+        </header>
+      </div>
+      <Routes>
+        <Route path='/' element={<MyStoreItemGrid />}></Route>
+        <Route path='/profile' element={<Profile />}></Route>
+      </Routes>
+    </Router>
   );
 }
 

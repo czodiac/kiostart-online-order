@@ -19,7 +19,7 @@ export const Logo = () => {
     });
 
     return (
-        <div style={{ marginBottom: 15 }}>
+        <div style={{ marginBottom: 15, marginTop: 55 }}>
             <Img src={menuImg} />
         </div>
     )

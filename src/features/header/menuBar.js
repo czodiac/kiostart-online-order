@@ -11,6 +11,7 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
+import StoreIcon from '@mui/icons-material/Store';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
@@ -116,14 +117,27 @@ export const MenuBar = () => {
             onClose={handleMobileMenuClose}
         >
             {currentUser ? (
-                <MenuItem onClick={logOut}>Logout</MenuItem>
+                <>
+                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
+                        <Button color="inherit" component={Link} to={'/'}>Home</Button>
+                    </MenuItem>
+                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
+                        <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
+                    </MenuItem>
+                    <MenuItem onClick={logOut}>
+                        <Button color="inherit" component={Link}>Logout</Button>
+                    </MenuItem>
+                </>
             ) : (
                 <>
+                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
+                        <Button color="inherit" component={Link} to={'/'}>Home</Button>
+                    </MenuItem>
                     <MenuItem divider='true' onClick={showLoginModal}>
-                        <p>Login</p>
+                        <Button color="inherit">Login</Button>
                     </MenuItem>
                     <MenuItem onClick={showRegisterModal}>
-                        <p>Register</p>
+                        <Button color="inherit">Register</Button>
                     </MenuItem>
                 </>
             )}
@@ -135,14 +149,9 @@ export const MenuBar = () => {
             <LoginModal />
             <AppBar >
                 <Toolbar>
-                    <Typography
-                        variant="h6"
-                        noWrap
-                        component="div"
-                        sx={{ display: { xs: 'none', sm: 'block' } }}
-                    >
+                    <IconButton color="inherit" component={Link} to="/">
                         Iltae's Store
-                    </Typography>
+                    </IconButton>
                     <Search>
                         <SearchIconWrapper>
                             <SearchIcon />
@@ -152,19 +161,22 @@ export const MenuBar = () => {
                             inputProps={{ 'aria-label': 'search' }}
                         />
                     </Search>
-                    <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'none', sm: 'block' } }}>
+                    <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'none', md: 'block' } }}>
                         {currentUser ? (
                             <>
+                                <Button color="inherit" component={Link} to={'/'}>Home</Button>
+                                <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
                                 <Button color="inherit" onClick={logOut}>Logout</Button>
                             </>
                         ) : (
                             <>
+                                <Button color="inherit" component={Link} to={'/'}>Home</Button>
                                 <Button color="inherit" onClick={showLoginModal}>Login</Button>
                                 <Button color="inherit" onClick={showRegisterModal}>Register</Button>
                             </>
                         )}
                     </Box>
-                    <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
+                    <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'block', md: 'none' } }}>
                         <IconButton
                             size="large"
                             aria-label="show more"

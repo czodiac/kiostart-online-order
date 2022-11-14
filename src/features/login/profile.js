@@ -3,26 +3,26 @@ import { Navigate } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import { getAuth } from "../../slices/authSlice";
 
-const Profile = () => {
+export const Profile = () => {
   const { user: currentUser } = useSelector(getAuth);
 
   if (!currentUser) {
-    return <Navigate to="/login" />;
+    return <Navigate to="/" />;
   }
 
   return (
-    <div className="container">
-      <header className="jumbotron">
-        <h3>
-          <strong>{currentUser.username}</strong> Profile
-        </h3>
+    <div style={{ marginLeft: 40 }}>
+      <header>
+        <h2>My Profile
+        </h2>
       </header>
+      <p><strong>User Name:</strong> {currentUser.username}</p>
       <p>
-        <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
+        <strong>JWT Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{" "}
         {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
       </p>
       <p>
-        <strong>Id:</strong> {currentUser.id}
+        <strong>User ID:</strong> {currentUser.id}
       </p>
       <p>
         <strong>Email:</strong> {currentUser.email}
@@ -35,5 +35,3 @@ const Profile = () => {
     </div>
   );
 };
-
-export default Profile;
