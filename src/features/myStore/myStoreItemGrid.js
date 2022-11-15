@@ -25,11 +25,11 @@ export const MyStoreItemGrid = () => {
     return (
         <div id={containerId}>
             <Grid className="shop_item" container spacing={2}>
-                {(items !== '') ? items.map((item, index) => (
+                {(items !== null && items !== '') ? items.map((item, index) => (
                     <Grid item xs={12} sm={6} key={index} zeroMinWidth>
                         <ShopItem><MyStoreItem item={item} /></ShopItem>
                     </Grid>
-                )) : 'Loading...'}
+                )) : <div className="noItemFound">No items found.</div>}
             </Grid>
             <MyStoreItemModal />
         </div>

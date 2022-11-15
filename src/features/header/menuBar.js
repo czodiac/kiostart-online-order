@@ -1,30 +1,22 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { LoginModal } from '../login/loginModal';
 import { logoutAsync } from '../../slices/authSlice';
 import { openLoginModal, openRegisterModal } from "../../slices/modalSlice";
-
+import { selectMyStoreInitialItems, setMyStoreItems } from "../../slices/myStoreItemSlice";
 import { styled, alpha } from '@mui/material/styles';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Toolbar from '@mui/material/Toolbar';
-import StoreIcon from '@mui/icons-material/Store';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
-import Badge from '@mui/material/Badge';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import MailIcon from '@mui/icons-material/Mail';
-import NotificationsIcon from '@mui/icons-material/Notifications';
-import MoreIcon from '@mui/icons-material/MoreVert';
-import { Home } from "@mui/icons-material";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -62,6 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         width: '100%',
         [theme.breakpoints.up('md')]: {
             width: '20ch',
+            minWidth: '220px',
         },
     },
 }));
@@ -69,6 +62,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 export const MenuBar = () => {
     const dispatch = useDispatch();
     const { user: currentUser } = useSelector((state) => state.auth);
+    const initialItems = useSelector(selectMyStoreInitialItems);
 
     const logOut = useCallback(() => {
         dispatch(logoutAsync());
@@ -86,10 +80,8 @@ export const MenuBar = () => {
     }
 
     // Menu bar related
-    const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-    const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
     const handleMobileMenuClose = () => {
@@ -117,7 +109,7 @@ export const MenuBar = () => {
             onClose={handleMobileMenuClose}
         >
             {currentUser ? (
-                <>
+                <div>
                     <MenuItem divider='true' onClick={handleMobileMenuClose}>
                         <Button color="inherit" component={Link} to={'/'}>Home</Button>
                     </MenuItem>
@@ -127,9 +119,9 @@ export const MenuBar = () => {
                     <MenuItem onClick={logOut}>
                         <Button color="inherit" component={Link}>Logout</Button>
                     </MenuItem>
-                </>
+                </div>
             ) : (
-                <>
+                <div>
                     <MenuItem divider='true' onClick={handleMobileMenuClose}>
                         <Button color="inherit" component={Link} to={'/'}>Home</Button>
                     </MenuItem>
@@ -139,10 +131,24 @@ export const MenuBar = () => {
                     <MenuItem onClick={showRegisterModal}>
                         <Button color="inherit">Register</Button>
                     </MenuItem>
-                </>
+                </div>
             )}
         </Menu>
     );
+
+    const searchOnChange = (e) => {
+        // Perform case insensitive search.
+        const searchString = e.target.value.toLowerCase();
+        let filtered = initialItems.filter((el) => {
+            const foundInName = (el.name == null) ? false : el.name.toLowerCase().includes(searchString);
+            const foundInDesc = (el.description == null) ? false : el.description.toLowerCase().includes(searchString);
+            return foundInName || foundInDesc;
+        });
+        if (filtered == null || filtered.length == 0) {
+            filtered = null;
+        }
+        dispatch(setMyStoreItems(filtered));
+    }
 
     return (
         <Box sx={{ flexGrow: 1 }}>
@@ -152,13 +158,15 @@ export const MenuBar = () => {
                     <IconButton color="inherit" component={Link} to="/">
                         Iltae's Store
                     </IconButton>
-                    <Search>
+                    <Search className='minWidth0'>
                         <SearchIconWrapper>
                             <SearchIcon />
                         </SearchIconWrapper>
                         <StyledInputBase
-                            placeholder="Search…"
+                            sx={{ minWidth: { xs: '0' } }}
+                            placeholder="Search name or description"
                             inputProps={{ 'aria-label': 'search' }}
+                            onChange={searchOnChange}
                         />
                     </Search>
                     <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'none', md: 'block' } }}>

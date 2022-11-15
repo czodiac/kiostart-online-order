@@ -3,3 +3,8 @@
     padding: 0 20px;
     margin: auto;
 }
+
+.noItemFound {
+    padding-top: 50px;
+    margin: auto;
+}
