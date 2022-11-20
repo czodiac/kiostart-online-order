@@ -32,6 +32,7 @@ const Search = styled('div')(({ theme }) => ({
         marginLeft: theme.spacing(3),
         width: 'auto',
     },
+    display: 'inherit'
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -144,7 +145,7 @@ export const MenuBar = () => {
             const foundInDesc = (el.description == null) ? false : el.description.toLowerCase().includes(searchString);
             return foundInName || foundInDesc;
         });
-        if (filtered == null || filtered.length == 0) {
+        if (filtered === null || filtered.length === 0) {
             filtered = null;
         }
         dispatch(setMyStoreItems(filtered));
