@@ -56,7 +56,7 @@ export const CartItemGrid = () => {
             <div id={containerId}>
                 {(cartItems !== null && cartItems.length > 0) ? (
                     <>
-                        <table>
+                        <table class="fullWidthTable">
                             <thead>
                                 <tr>
                                     <td class="tdHeader">Quantity</td>
@@ -83,17 +83,18 @@ export const CartItemGrid = () => {
                             <tr><td width="355"><strong>Total</strong></td><td width="80"><strong>$0</strong></td></tr>
                         </table>
                         <div class="sectionHeader">
-                            Add an order tip
+                            Gratuity
                         </div>
                         <table className="cartTable">
                             <tr>
                                 <td>
-                                    <Input placeholder="Tip" sx={{ width: 100 }} onChange={() => { }} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
+                                    <Input placeholder="Tip" sx={{ width: 60 }} onChange={() => { }} startAdornment={<InputAdornment position="start">$</InputAdornment>} />
                                 </td>
                                 <td>
                                     <RadioGroup
                                         row
-                                        onChange={() => { }}>
+                                        onChange={() => { }}
+                                        className='smallFont'>
                                         <FormControlLabel value="10" control={<Radio size="small" className='tipRadio' />} label="10%" />
                                         <FormControlLabel value="15" control={<Radio size="small" className='tipRadio' />} label="15%" />
                                         <FormControlLabel value="20" control={<Radio size="small" className='tipRadio' />} label="20%" />

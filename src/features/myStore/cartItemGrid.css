@@ -9,6 +9,11 @@
     padding-left: 19px;
 }
 
+.smallFont .MuiFormControlLabel-label,
+.cartTable .MuiInputBase-input {
+    font-size: 0.875rem;
+}
+
 .tdHeader {
     background-color: #F7F7F7;
     border-bottom: 1px #D6D6D6 solid;
@@ -21,10 +26,10 @@
 .sectionHeader {
     background-color: #F7F7F7;
     border-bottom: 1px #D6D6D6 solid;
-    height: 28px;
+    height: 27px;
     font-size: medium;
     font-weight: 600;
-    padding: 5px 0 0 10px;
+    padding: 10px 0 0 10px;
     margin-top: 10px;
 }
 
@@ -37,6 +42,15 @@
     width: auto;
     margin-right: 0px;
     margin-left: auto;
+}
+
+.fullWidthTable {
+    width: 100%;
+}
+
+table td {
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 hr {

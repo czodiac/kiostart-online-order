@@ -3,6 +3,8 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalWidth, getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/modalSlice';
 import { incrementCartCount, addItem } from '../../slices/cartSlice';
+import Grid from '@mui/material/Grid';
+import Alert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -39,6 +41,7 @@ const modal_style = {
 
 export const MyStoreItemModal = () => {
     const [qty, setQty] = useState(1);
+    const [itemAdded, setItemAdded] = useState(false);
     const isMyStoreModalOpen = useSelector(getMyStoreItemModalStatus);
     const item = useSelector(getMyStoreItemModalItem);
     const dispatch = useDispatch();
@@ -46,13 +49,18 @@ export const MyStoreItemModal = () => {
 
     const handleClose = () => {
         dispatch(setMyStoreItemModalStatus(false));
+        setItemAdded(false);
         setQty(1);
     }
     const handleAdd = () => {
         dispatch(incrementCartCount(1));
         const itemID = item.id;
         dispatch(addItem({ itemID, qty }));
+        setItemAdded(true);
         setQty(1);
+        setTimeout(() => {
+            setItemAdded(false);
+        }, "3000");
     }
     const decrementQty = () => {
         let newQty = qty - 1;
@@ -73,6 +81,11 @@ export const MyStoreItemModal = () => {
                 <Box sx={modal_style}>
                     <Button className="closeButton" variant="contained" onClick={handleClose}>X</Button>
                     <Img src={item != null ? item.item_image.item_image : ''} />
+                    {itemAdded && (
+                        <Alert severity="success">
+                            Added to the cart successfully.
+                        </Alert>
+                    )}
                     <Typography id="keep-mounted-modal-title" variant="h6" component="h2">
                         {item != null ? item.name : ''}
                     </Typography>
