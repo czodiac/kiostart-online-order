@@ -14,6 +14,7 @@ import { setDevice } from './slices/deviceInfoSlice';
 import { Logo } from './features/header/logo';
 import { MenuBar } from './features/header/menuBar';
 import { Profile } from './features/login/profile';
+import { CartItemGrid } from './features/myStore/cartItemGrid';
 
 function App() {
   // Get store/item data.
@@ -48,6 +49,7 @@ function App() {
       <Routes>
         <Route path='/' element={<MyStoreItemGrid />}></Route>
         <Route path='/profile' element={<Profile />}></Route>
+        <Route path='/cart' element={<CartItemGrid />}></Route>
       </Routes>
     </Router>
   );

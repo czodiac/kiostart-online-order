@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { setModalWidth, getMyStoreItemModalItem, getMyStoreItemModalStatus, setMyStoreItemModalStatus } from '../../slices/modalSlice';
+import { incrementCartCount, addItem } from '../../slices/cartSlice';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Button from '@mui/material/Button';
@@ -48,7 +49,9 @@ export const MyStoreItemModal = () => {
         setQty(1);
     }
     const handleAdd = () => {
-        alert(qty + ' added to the cart.');
+        dispatch(incrementCartCount(1));
+        const itemID = item.id;
+        dispatch(addItem({ itemID, qty }));
         setQty(1);
     }
     const decrementQty = () => {

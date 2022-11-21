@@ -6,6 +6,7 @@ import modalSlice from '../slices/modalSlice';
 
 import authReducer from "../slices/authSlice";
 import messageReducer from "../slices/serverResponseMessageSlice";
+import cartSlice from '../slices/cartSlice';
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     device: deviceInfoSlice,
     modal: modalSlice,
     auth: authReducer,
-    serverMessage: messageReducer
+    serverMessage: messageReducer,
+    cart: cartSlice,
   },
 });

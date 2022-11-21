@@ -1,0 +1,44 @@
+#cartContainer {
+    padding-top: 10px;
+    width: 375px;
+    margin: auto;
+}
+
+.tipRadio {
+    width: 33px;
+    padding-left: 19px;
+}
+
+.tdHeader {
+    background-color: #F7F7F7;
+    border-bottom: 1px #D6D6D6 solid;
+    height: 33px;
+    font-size: medium;
+    font-weight: 600;
+    padding: 0px 7px;
+}
+
+.sectionHeader {
+    background-color: #F7F7F7;
+    border-bottom: 1px #D6D6D6 solid;
+    height: 28px;
+    font-size: medium;
+    font-weight: 600;
+    padding: 5px 0 0 10px;
+    margin-top: 10px;
+}
+
+.cartButtons {
+    margin: 20px 0;
+    text-align: center;
+}
+
+.cartTable {
+    width: auto;
+    margin-right: 0px;
+    margin-left: auto;
+}
+
+hr {
+    border-top: 1px dashed #f9f9f9;
+}

@@ -25,7 +25,7 @@ export const MyStoreItemGrid = () => {
     return (
         <div id={containerId}>
             <Grid className="shop_item" container spacing={2}>
-                {(items !== null && items !== '') ? items.map((item, index) => (
+                {(items !== null && items.length > 0) ? items.map((item, index) => (
                     <Grid item xs={12} sm={6} key={index} zeroMinWidth>
                         <ShopItem><MyStoreItem item={item} /></ShopItem>
                     </Grid>

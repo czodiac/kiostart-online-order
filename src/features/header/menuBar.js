@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 
 import { LoginModal } from '../login/loginModal';
 import { logoutAsync } from '../../slices/authSlice';
+import { selectCartCount } from "../../slices/cartSlice";
 import { openLoginModal, openRegisterModal } from "../../slices/modalSlice";
 import { selectMyStoreInitialItems, setMyStoreItems } from "../../slices/myStoreItemSlice";
 import { styled, alpha } from '@mui/material/styles';
@@ -17,6 +18,8 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import Badge from '@mui/material/Badge';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -33,6 +36,25 @@ const Search = styled('div')(({ theme }) => ({
         width: 'auto',
     },
     display: 'inherit'
+}));
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+    '& .MuiBadge-badge': {
+        right: -3,
+        top: 13,
+        border: `2px solid ${theme.palette.background.paper}`,
+        padding: '0 4px',
+        fontWeight: 'bold',
+        [theme.breakpoints.down('sm')]: {
+            borderColor: '#969696',
+        },
+    },
+    [theme.breakpoints.down('sm')]: {
+        color: '#000',
+    },
+    [theme.breakpoints.up('md')]: {
+        color: '#d2e8ff',
+    },
 }));
 
 const SearchIconWrapper = styled('div')(({ theme }) => ({
@@ -64,6 +86,7 @@ export const MenuBar = () => {
     const dispatch = useDispatch();
     const { user: currentUser } = useSelector((state) => state.auth);
     const initialItems = useSelector(selectMyStoreInitialItems);
+    const cartCount = useSelector(selectCartCount);
 
     const logOut = useCallback(() => {
         dispatch(logoutAsync());
@@ -92,6 +115,7 @@ export const MenuBar = () => {
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
     };
+
     const mobileMenuId = 'primary-search-account-menu-mobile';
     const renderMobileMenu = (
         <Menu
@@ -109,31 +133,35 @@ export const MenuBar = () => {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            {currentUser ? (
-                <div>
-                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
-                        <Button color="inherit" component={Link} to={'/'}>Home</Button>
-                    </MenuItem>
-                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
-                        <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
-                    </MenuItem>
-                    <MenuItem onClick={logOut}>
-                        <Button color="inherit" component={Link}>Logout</Button>
-                    </MenuItem>
-                </div>
-            ) : (
-                <div>
-                    <MenuItem divider='true' onClick={handleMobileMenuClose}>
-                        <Button color="inherit" component={Link} to={'/'}>Home</Button>
-                    </MenuItem>
-                    <MenuItem divider='true' onClick={showLoginModal}>
-                        <Button color="inherit">Login</Button>
-                    </MenuItem>
-                    <MenuItem onClick={showRegisterModal}>
-                        <Button color="inherit">Register</Button>
-                    </MenuItem>
-                </div>
-            )}
+            <Box sx={{ textAlign: 'center', flex: 1 }}>
+                <MenuItem divider='true' onClick={handleMobileMenuClose}>
+                    <Button color="inherit" component={Link} to={'/'}>Home</Button>
+                </MenuItem>
+                {currentUser ? (
+                    <>
+                        <MenuItem divider='true' onClick={handleMobileMenuClose}>
+                            <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
+                        </MenuItem>
+                        <MenuItem onClick={logOut}>
+                            <Button color="inherit" component={Link}>Logout</Button>
+                        </MenuItem>
+                    </>
+                ) : (
+                    <>
+                        <MenuItem divider='true' onClick={showLoginModal}>
+                            <Button color="inherit">Login</Button>
+                        </MenuItem>
+                        <MenuItem divider='true' onClick={showRegisterModal}>
+                            <Button color="inherit">Register</Button>
+                        </MenuItem>
+                    </>
+                )}
+                <IconButton component={Link} to={'/cart'}>
+                    <StyledBadge badgeContent={cartCount}>
+                        <ShoppingCartIcon />
+                    </StyledBadge>
+                </IconButton>
+            </Box>
         </Menu>
     );
 
@@ -171,19 +199,23 @@ export const MenuBar = () => {
                         />
                     </Search>
                     <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'none', md: 'block' } }}>
+                        <Button color="inherit" component={Link} to={'/'}>Home</Button>
                         {currentUser ? (
                             <>
-                                <Button color="inherit" component={Link} to={'/'}>Home</Button>
                                 <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
                                 <Button color="inherit" onClick={logOut}>Logout</Button>
                             </>
                         ) : (
                             <>
-                                <Button color="inherit" component={Link} to={'/'}>Home</Button>
                                 <Button color="inherit" onClick={showLoginModal}>Login</Button>
                                 <Button color="inherit" onClick={showRegisterModal}>Register</Button>
                             </>
                         )}
+                        <IconButton component={Link} to={'/cart'}>
+                            <StyledBadge badgeContent={cartCount}>
+                                <ShoppingCartIcon />
+                            </StyledBadge>
+                        </IconButton>
                     </Box>
                     <Box sx={{ textAlign: 'right', flex: 1, display: { xs: 'block', md: 'none' } }}>
                         <IconButton
