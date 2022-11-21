@@ -142,7 +142,7 @@ export const MenuBar = () => {
                         <MenuItem divider='true' onClick={handleMobileMenuClose}>
                             <Button color="inherit" component={Link} to={'/profile'}>Profile</Button>
                         </MenuItem>
-                        <MenuItem onClick={logOut}>
+                        <MenuItem divider='true' onClick={logOut}>
                             <Button color="inherit" component={Link}>Logout</Button>
                         </MenuItem>
                     </>
@@ -156,7 +156,7 @@ export const MenuBar = () => {
                         </MenuItem>
                     </>
                 )}
-                <IconButton component={Link} to={'/cart'}>
+                <IconButton component={Link} to={'/cart'} onClick={handleMobileMenuClose}>
                     <StyledBadge badgeContent={cartCount}>
                         <ShoppingCartIcon />
                     </StyledBadge>
